@@ -1,0 +1,100 @@
+@import 'tailwindcss';
+
+@font-face {
+  font-family: 'Inknut Antiqua';
+  src: url(./assets/fonts/InknutAntiqua-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@layer base {
+  /* Your base styles here */
+  :root {
+    @apply bg-primary font-inknut text-secondary antialiased;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  #root {
+    @apply m-auto max-w-rootMax;
+  }
+
+  h1 {
+    @apply text-h1 font-semibold;
+  }
+
+  h2 {
+    @apply text-h2 font-semibold;
+  }
+
+  h3 {
+    @apply text-h3 font-semibold;
+  }
+}
+
+@theme {
+  /* Main colors */
+  --color-primary: #e5f4ff;
+  --color-secondary: #1a2e40;
+  --color-gold-accent: #f5b942;
+  --color-gold-dark: #866d1c;
+
+  /* Extra lightblue if needed */
+  --color-lightblue: #b1cac9;
+
+  /* Neutral colors */
+  --color-green-accent: #4caf50;
+  --color-darkgrey: #2c2f33;
+  --color-lightgrey: #f5f7fa;
+  --color-midgrey: #a8b3c5;
+
+  /* Btn colors */
+  --color-blue-btn: #38a2bc;
+  --color-blueg1: #48a8bf;
+  --color-blueg2: #53c3de;
+  --color-delete: #ff4d4d;
+  --color-modify: #f5b942;
+
+  /* Text sizes */
+  --text-base: 1rem;
+  --text-button: 0.875rem;
+  --text-h1: 2rem;
+  --text-h2: 1.75rem;
+  --text-h3: 1.5rem;
+  --text-h4: 1.25rem;
+  --text-h5: 1.125rem;
+  --text-h6: 1rem;
+
+  /* Font families */
+  --font-inknut: 'Inknut Antiqua', serif;
+
+  /* Shadows */
+  --drop-shadow-test: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  --drop-shadow-text: 0 1.2px 1.2px rgba(0, 0, 0, 0.8);
+  --drop-shadow-hamburger: -5px 0 15px rgba(26, 46, 64, 0.45);
+  --shadow-sidebar: 0px 0px 18px rgba(26, 46, 64, 0.5);
+  --drop-shadow-custom: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  --shadow-custom: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  /* Media queries */
+  --breakpoint-1xl: 1200px;
+  --breakpoint-mid: 1080px;
+  --breakpoint-smd: 840px;
+  --breakpoint-xs: 620px;
+
+  /* Custom heights */
+  --height-screenWithoutHeader: calc(100vh - 5.5rem);
+
+  /* Custom spacings */
+  --spacing-sidebar: 17rem;
+  --spacing-rootMax: 90rem;
+  /* --spacing-afterSidebar: calc(var(--spacing-sidebar) + 3vw); */
+  --spacing-afterSidebar: clamp(
+    314px,
+    calc(var(--spacing-sidebar) + 3vw),
+    360px
+  );
+
+  --spacing-sidebarMargin: clamp(16px, 2vw, 36px);
+}
