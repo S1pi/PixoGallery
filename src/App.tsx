@@ -9,6 +9,8 @@ import Login from './views/Login';
 import {UserProvider} from './contexts/UserContext';
 import Logout from './views/Logout';
 import ProtectedRoute from './components/ProtectedRoute';
+import Modify from './views/Modify';
+import '@smastrom/react-rating/style.css';
 
 const App = () => {
   return (
@@ -31,6 +33,14 @@ const App = () => {
                 element={
                   <ProtectedRoute>
                     <Upload />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/modify"
+                element={
+                  <ProtectedRoute>
+                    <Modify />
                   </ProtectedRoute>
                 }
               />

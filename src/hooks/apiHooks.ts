@@ -1,12 +1,18 @@
 import {
+  Comment,
   Like,
   MediaItem,
   MediaItemWithOwner,
+  Rating,
   UserWithNoPassword,
 } from 'hybrid-types/DBTypes';
 import {useEffect, useState} from 'react';
 import {fetchData} from '../lib/functions';
-import {Credentials, RegisterCredentials} from '../types/LocalTypes';
+import {
+  Credentials,
+  RatingAverage,
+  RegisterCredentials,
+} from '../types/LocalTypes';
 import {
   AvailableResponse,
   LoginResponse,
@@ -101,7 +107,35 @@ const useMedia = () => {
     );
   };
 
-  return {mediaArray, postMedia, deleteMedia};
+  const modifyMedia = async (
+    media_id: number,
+    inputs: Record<string, string>,
+    token: string,
+  ) => {
+    // Send a PUT request to /media/:media_id with the token in the Authorization header.
+    const modifiedMedia: Pick<MediaItem, 'title' | 'description'> = {
+      title: inputs.title,
+      description: inputs.description,
+    };
+
+    console.log('modifying media', modifiedMedia);
+
+    const options = {
+      method: 'PUT',
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(modifiedMedia),
+    };
+
+    return await fetchData<MessageResponse>(
+      import.meta.env.VITE_MEDIA_API + '/media/' + media_id,
+      options,
+    );
+  };
+
+  return {mediaArray, postMedia, deleteMedia, modifyMedia};
 };
 
 const useFile = () => {
@@ -188,16 +222,61 @@ const useUser = () => {
     );
   };
 
+  const getUserById = async (id: number) => {
+    return await fetchData<UserWithNoPassword>(
+      import.meta.env.VITE_AUTH_API + '/users/' + id,
+    );
+  };
+
   return {
     getUserByToken,
     postRegister,
     getUserNameAvailable,
     getEmailAvailable,
+    getUserById,
   };
 };
 
 const useComments = () => {
   // TODO: implement media/comments resource API connections here
+  const {getUserById} = useUser();
+
+  const postComment = async (
+    comment_text: string,
+    media_id: number,
+    token: string,
+  ) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({media_id, comment_text}),
+    };
+    return await fetchData<MessageResponse>(
+      import.meta.env.VITE_MEDIA_API + '/comments',
+      options,
+    );
+  };
+
+  const getCommentsByMediaId = async (media_id: number) => {
+    const comments = await fetchData<Comment[]>(
+      import.meta.env.VITE_MEDIA_API + '/comments/bymedia/' + media_id,
+    );
+
+    const commentsWithUsernames = await Promise.all<
+      Comment & {username: string}
+    >(
+      comments.map(async (comment) => {
+        const user = await getUserById(comment.user_id);
+        return {...comment, username: user.username};
+      }),
+    );
+    return commentsWithUsernames;
+  };
+
+  return {postComment, getCommentsByMediaId};
 };
 
 const useLike = () => {
@@ -256,4 +335,52 @@ const useLike = () => {
   return {postLike, deleteLike, getCountByMediaId, getUserLike};
 };
 
-export {useMedia, useFile, useAuthentication, useUser, useComments, useLike};
+const useRating = () => {
+  const postRating = async (
+    media_id: number,
+    rating: number,
+    token: string,
+  ) => {
+    // Send a POST request to /ratings with object { media_id, rating } and the token in the
+    // Authorization header.
+    const options = {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({rating_value: rating, media_id}),
+    };
+
+    return await fetchData<MessageResponse>(
+      import.meta.env.VITE_MEDIA_API + '/ratings',
+      options,
+    );
+  };
+
+  const getRatingByMediaId = async (media_id: number) => {
+    // Send a GET request to /ratings/average/:media_id to get the average rating.
+    return await fetchData<RatingAverage>(
+      import.meta.env.VITE_MEDIA_API + '/ratings/average/' + media_id,
+    );
+  };
+
+  const getRatingListByMediaId = async (media_id: number) => {
+    // Send a GET request to /ratings/bymedia/:media_id to get the list of ratings.
+    return await fetchData<Rating[]>(
+      import.meta.env.VITE_MEDIA_API + '/ratings/bymedia/' + media_id,
+    );
+  };
+
+  return {postRating, getRatingByMediaId, getRatingListByMediaId};
+};
+
+export {
+  useMedia,
+  useFile,
+  useAuthentication,
+  useUser,
+  useComments,
+  useLike,
+  useRating,
+};
