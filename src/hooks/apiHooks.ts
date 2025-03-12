@@ -352,10 +352,14 @@ const useRating = () => {
       body: JSON.stringify({rating_value: rating, media_id}),
     };
 
-    return await fetchData<MessageResponse>(
+    console.log('posting rating, Rating value: ', rating);
+    const response = await fetchData<MessageResponse>(
       import.meta.env.VITE_MEDIA_API + '/ratings',
       options,
     );
+
+    console.log('Rating response: ', response);
+    return response;
   };
 
   const getRatingByMediaId = async (media_id: number) => {

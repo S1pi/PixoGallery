@@ -4,13 +4,12 @@ import type {
 } from 'hybrid-types/DBTypes';
 import {useEffect, useState} from 'react';
 import {Heart, Rating} from '@smastrom/react-rating';
-import {useRating, useUser} from '../hooks/apiHooks';
+import {useRating} from '../hooks/apiHooks';
 import {useUserContext} from '../hooks/ContextHooks';
+import Likes from './Likes';
 
 const Ratings = ({item}: {item: MediaItemWithOwner}) => {
   const [rating, setRating] = useState(0);
-  const [hover, setHover] = useState(0);
-
   const [userRating, setUserRating] = useState<number>(0);
   const {postRating, getRatingByMediaId, getRatingListByMediaId} = useRating();
   const user = useUserContext();
@@ -18,6 +17,7 @@ const Ratings = ({item}: {item: MediaItemWithOwner}) => {
   const getRating = async () => {
     try {
       const rating = await getRatingByMediaId(item.media_id);
+      console.log('Rating: ', rating);
       setRating(rating.average);
     } catch (err) {
       console.error("Couldn't get average rating", (err as Error).message);
@@ -46,7 +46,9 @@ const Ratings = ({item}: {item: MediaItemWithOwner}) => {
     }
 
     console.log("User's rating: ", userRating);
-    await postRating(userRating, item.media_id, token);
+    const response = await postRating(item.media_id, userRating, token);
+
+    console.log('Rating response: ', response);
     getRating();
   };
 
@@ -55,34 +57,42 @@ const Ratings = ({item}: {item: MediaItemWithOwner}) => {
     getUserRating();
   }, [item]);
 
-  useEffect(() => {
-    console.log('User rating changed: ', userRating);
-  }, [userRating]);
-
   return (
-    <div className="flex flex-col items-center gap-4">
-      <h2>Current Rating: </h2>
-      <Rating
-        style={{color: 'gold'}}
-        value={rating}
-        readOnly
-        itemStyles={{
-          itemShapes: Heart,
-          activeFillColor: '',
-          inactiveFillColor: 'lightgrey',
-        }}
-      />
-      <h3>Your rating: </h3>
-      <Rating
-        style={{color: 'gold'}}
-        value={userRating}
-        itemStyles={{
-          itemShapes: Heart,
-          activeFillColor: 'gold',
-          inactiveFillColor: 'lightgrey',
-        }}
-        onChange={setUserRating}
-      />
+    <div className="flex flex-row items-center gap-4 rounded-md border-2 border-darkgrey px-10 py-4">
+      <div className="flex flex-col items-center justify-center gap-4">
+        <h4>Current Rating: </h4>
+        <Rating
+          style={{maxWidth: 150}}
+          value={rating}
+          readOnly
+          itemStyles={{
+            itemShapes: Heart,
+            activeFillColor: '#38a2bc',
+            inactiveFillColor: '#a8b3c5',
+          }}
+        />
+        <Likes item={item} />
+      </div>
+      <div className="flex flex-col items-center justify-center gap-4">
+        <h4>Rate this media: </h4>
+        <Rating
+          style={{maxWidth: 150}}
+          value={userRating}
+          itemStyles={{
+            itemShapes: Heart,
+            activeFillColor: '#38a2bc',
+            inactiveFillColor: '#a8b3c5',
+          }}
+          // onChange={setUserRating}
+          onChange={setUserRating}
+        />
+        <button
+          className="block w-full cursor-pointer rounded-md bg-gradient-to-l from-blueg1 to-blueg2 p-2 text-center text-sm transition-all duration-500 ease-in-out hover:from-blueg2 hover:to-blueg1 hover:text-gold-accent"
+          onClick={handleRatingChange}
+        >
+          Submit rating
+        </button>
+      </div>
     </div>
   );
 };

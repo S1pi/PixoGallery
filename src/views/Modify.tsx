@@ -2,13 +2,14 @@ import {useState} from 'react';
 import {useForm} from '../hooks/formHooks';
 import {useMedia} from '../hooks/apiHooks';
 import {MediaItem} from 'hybrid-types/DBTypes';
-import {useLocation} from 'react-router';
+import {useLocation, useNavigate} from 'react-router';
 
 const Modify = () => {
   const {state} = useLocation();
   const item: MediaItem = state.item;
   const [uploading, setUploading] = useState<boolean>(false);
   const [uploadResult, setUploadResult] = useState<string>('');
+  const navigation = useNavigate();
 
   const {modifyMedia} = useMedia();
 
@@ -30,6 +31,9 @@ const Modify = () => {
       console.error((e as Error).message);
     } finally {
       setUploading(false);
+      setTimeout(() => {
+        navigation('/');
+      }, 1000);
     }
   };
 

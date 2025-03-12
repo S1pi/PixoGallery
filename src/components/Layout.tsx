@@ -19,7 +19,7 @@ const Layout = () => {
         <nav className="flex items-center justify-between rounded-b-md bg-midgrey p-2">
           <div className="flex items-center rounded-sm p-2">
             <img
-              src="/img/pixo-pixo-kalmar-01-rf-01.jpg"
+              src="./img/pixo-pixo-kalmar-01-rf-01.jpg"
               alt="pixo logo"
               className="h-16 w-16 cursor-pointer rounded-full"
               onClick={() => navigation('/')}

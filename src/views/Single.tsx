@@ -1,6 +1,5 @@
 import {MediaItemWithOwner} from 'hybrid-types/DBTypes';
 import {NavigateFunction, useLocation, useNavigate} from 'react-router';
-import Likes from '../components/Likes';
 import {useUserContext} from '../hooks/ContextHooks';
 import {useMedia} from '../hooks/apiHooks';
 import {RiArrowGoBackFill} from 'react-icons/ri';
@@ -87,7 +86,8 @@ const Single = () => {
             <p>
               <strong>Size:</strong> {Math.round(item.filesize / 1024)} kB
             </p>
-            <Likes item={item} />
+            {/* <Likes item={item} /> */}
+            <Ratings item={item} />
             {(user?.user_id === item.user_id ||
               user?.level_name === 'Admin') && (
               <div className="flex flex-row gap-4">
@@ -115,7 +115,6 @@ const Single = () => {
               Description:
             </p>
             <p>{item.description}</p>
-            <Ratings item={item} />
           </div>
           <Comments item={item} />
         </div>
