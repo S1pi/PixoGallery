@@ -1,51 +1,50 @@
-# React + TypeScript + Vite
+# PIXOGALLERY
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Link to software:
 
-Currently, two official plugins are available:
+https://users.metropolia.fi/~miikavs/pixogallery/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Toiminnallisuudet toteutettu:
 
-## Expanding the ESLint configuration
+## Median lataaminen sovellukseen
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Käyttäjä voi ladata mediaa sovellukseen ja sovellus näyttää mediat
+käyttäjälle etusivulla ja kertoo niiden perus tiedot. Käyttäjä voi avata
+median isommalle ruudulle show napista jossa on enemmän toiminnallisuuksia.
 
-- Configure the top-level `parserOptions` property like this:
+## Kuvien poistaminen sekä muokkaaminen
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Jos käyttäjä omistaa kuvan tai on admin hän voi poistaa tai muokata kyseistä kuvaa
+kun on avannut kuvan. Poistaminen tapahtuu suoraan samasta näytöstä mutta muokkaaminen
+avautuu uuteen ruutuun jossa voi antaa joko otsikon tai kuvatekstin uudelleen.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Kuvien tykkäys, kommentointi sekä arvosteleminen ratingin avulla
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Kun kuvan avaa siinä näkyy ruutu jossa on muiden käyttäjien kommentit sekä osio jossa
+näkyy tykkäykset sekä rating. Käyttäjä pystyy myös laittamaan itse ratingin kuvalle.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
-# hybrid-react-lab-25
+## Käytetyt grafiikkakirjastot
+
+Käytin iconeiden luomiseen react-iconsia:
+https://react-icons.github.io/react-icons/
+
+Ratingin toteutin käyttäen react-rating kirjastoa:
+https://www.npmjs.com/package/@smastrom/react-rating
+
+## Kuvakaappauksia käyttöliittymästä:
+
+### Mainpage
+
+![mainpage](screenshots/mainpage.png)
+
+### Kuvan aukaiseminen
+
+![Single](screenshots/single.png)
+
+### Mediainfo and likes + rating
+
+![Mediainfo](screenshots/mediainfo.png)
+
+### Upload näkymä
+
+![Upload](screenshots/Upload.png)
