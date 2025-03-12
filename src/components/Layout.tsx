@@ -26,7 +26,7 @@ const Layout = () => {
           <ul className="m-0 flex list-none justify-end p-2">
             <li>
               <Link
-                className="block p-4 text-center transition-all duration-500 ease-in-out hover:rounded-lg hover:bg-lightgrey"
+                className="block cursor-pointer p-4 text-center transition-all duration-500 ease-in-out hover:rounded-lg hover:bg-lightgrey"
                 to="/"
               >
                 Home
@@ -36,7 +36,7 @@ const Layout = () => {
               <>
                 <li>
                   <Link
-                    className="block p-4 text-center transition-all duration-500 ease-in-out hover:rounded-lg hover:bg-lightgrey"
+                    className="block cursor-pointer p-4 text-center transition-all duration-500 ease-in-out hover:rounded-lg hover:bg-lightgrey"
                     to="/profile"
                   >
                     Profile
@@ -44,7 +44,7 @@ const Layout = () => {
                 </li>
                 <li>
                   <Link
-                    className="block p-4 text-center transition-all duration-500 ease-in-out hover:rounded-lg hover:bg-lightgrey"
+                    className="block cursor-pointer p-4 text-center transition-all duration-500 ease-in-out hover:rounded-lg hover:bg-lightgrey"
                     to="/upload"
                   >
                     Upload
@@ -52,7 +52,7 @@ const Layout = () => {
                 </li>
                 <li>
                   <Link
-                    className="block p-4 text-center transition-all duration-500 ease-in-out hover:rounded-lg hover:bg-lightgrey"
+                    className="block cursor-pointer p-4 text-center transition-all duration-500 ease-in-out hover:rounded-lg hover:bg-lightgrey"
                     to="/logout"
                   >
                     Logout
@@ -62,7 +62,7 @@ const Layout = () => {
             ) : (
               <li>
                 <Link
-                  className="block p-4 text-center transition-all duration-500 ease-in-out hover:rounded-lg hover:bg-lightgrey"
+                  className="block cursor-pointer p-4 text-center transition-all duration-500 ease-in-out hover:rounded-lg hover:bg-lightgrey"
                   to="/login"
                 >
                   Login

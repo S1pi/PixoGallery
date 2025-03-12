@@ -1,6 +1,5 @@
 import {MediaItemWithOwner} from 'hybrid-types/DBTypes';
 import {Link} from 'react-router';
-import {useUserContext} from '../hooks/ContextHooks';
 
 type MediaItemProps = {
   item: MediaItemWithOwner;
@@ -8,7 +7,6 @@ type MediaItemProps = {
 };
 
 const MediaRow = (props: MediaItemProps) => {
-  const {user} = useUserContext();
   const {item} = props;
   return (
     <article className="w-full rounded-md bg-gradient-to-t from-lightblue to-lightgrey shadow-custom">
@@ -39,32 +37,12 @@ const MediaRow = (props: MediaItemProps) => {
         </div>
         <p>
           <Link
-            className="block w-full rounded-md bg-gradient-to-l from-blueg1 to-blueg2 p-2 text-center transition-all duration-500 ease-in-out hover:from-blueg2 hover:to-blueg1 hover:text-gold-accent"
+            className="block w-full cursor-pointer rounded-md bg-gradient-to-l from-blueg1 to-blueg2 p-2 text-center transition-all duration-500 ease-in-out hover:from-blueg2 hover:to-blueg1 hover:text-gold-accent"
             to="/single"
             state={{item}}
           >
             Show
           </Link>
-          {(user?.user_id === item.user_id || user?.level_name === 'Admin') && (
-            <>
-              <button
-                onClick={() => {
-                  console.log('Modify painettu', item.media_id);
-                }}
-                className="my-2 block w-full rounded-md bg-modify p-2 text-center transition-all duration-500 ease-in-out hover:text-green-accent"
-              >
-                Modify
-              </button>
-              <button
-                onClick={() => {
-                  console.log('Delete painettu', item.media_id);
-                }}
-                className="block w-full rounded-md bg-delete p-2 text-center transition-all duration-500 ease-in-out hover:text-gold-accent"
-              >
-                Delete
-              </button>
-            </>
-          )}
         </p>
       </div>
     </article>
