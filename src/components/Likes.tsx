@@ -92,7 +92,7 @@ const Likes = ({item}: {item: MediaItemWithOwner}) => {
   };
 
   return (
-    <div className="mt-8 flex w-1/3 flex-row items-center justify-center gap-4 rounded-md bg-midgrey p-4">
+    <div className="mt-4 flex w-1/3 flex-row items-center justify-center gap-4 rounded-md bg-midgrey p-4">
       <p className="w-42">Likes: {likeState.count}</p>
       {likeState.userLike ? (
         <IoMdHeart

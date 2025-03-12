@@ -1,10 +1,12 @@
-import {Link, Outlet} from 'react-router';
+import {Link, Outlet, useNavigate} from 'react-router';
 import {useUserContext} from '../hooks/ContextHooks';
 import {useEffect} from 'react';
 
 const Layout = () => {
   // jos käyttäjää ei ole, kutsu handleAutoLogin()
   const {user, handleAutoLogin} = useUserContext();
+  const navigation = useNavigate();
+
   useEffect(() => {
     if (!user) {
       handleAutoLogin();
@@ -19,9 +21,15 @@ const Layout = () => {
             <img
               src="/img/pixo-pixo-kalmar-01-rf-01.jpg"
               alt="pixo logo"
-              className="h-16 w-16 rounded-full"
+              className="h-16 w-16 cursor-pointer rounded-full"
+              onClick={() => navigation('/')}
             />
-            <h1 className="p-2 pl-20 text-h1 font-extrabold">PIXO GALLERY</h1>
+            <h1
+              className="cursor-pointer p-2 pl-20 text-h1 font-extrabold"
+              onClick={() => navigation('/')}
+            >
+              PIXO GALLERY
+            </h1>
           </div>
           <ul className="m-0 flex list-none justify-end p-2">
             <li>
@@ -71,7 +79,7 @@ const Layout = () => {
             )}
           </ul>
         </nav>
-        <main>
+        <main className="px-6">
           <Outlet />
         </main>
         <footer></footer>
